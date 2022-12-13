@@ -10,19 +10,17 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class WalletDTO {
+public class BankAccountTransactionDTO {
 
     private Long id;
 
+    @Size(max = 255)
+    private String walletId;
+
     @NotNull
-    @Size(max = 20)
-    private String name;
+    private Boolean deposit;
 
     @Size(max = 255)
-    private Long balance;
-
-    private Boolean active;
-
-    private UserDTO user;
+    private String amount;
 
 }

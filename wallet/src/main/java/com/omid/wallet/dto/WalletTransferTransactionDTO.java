@@ -1,6 +1,5 @@
 package com.omid.wallet.dto;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,19 +9,18 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class WalletDTO {
+public class WalletTransferTransactionDTO {
 
     private Long id;
 
     @NotNull
-    @Size(max = 20)
-    private String name;
+    private Long sourceWalletId;
 
     @Size(max = 255)
-    private Long balance;
+    private String destinationWalletId;
 
-    private Boolean active;
-
-    private UserDTO user;
+    @NotNull
+    @Size(max = 255)
+    private String amount;
 
 }

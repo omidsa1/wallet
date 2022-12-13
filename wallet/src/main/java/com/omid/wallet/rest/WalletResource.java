@@ -2,8 +2,7 @@ package com.omid.wallet.rest;
 
 import com.omid.wallet.dto.WalletDTO;
 import com.omid.wallet.mapper.WalletMapper;
-import com.omid.wallet.service.WalletServiceImpl;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.omid.wallet.service.WalletService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +16,11 @@ import java.util.List;
 @RequestMapping(value = "/api/wallets", produces = MediaType.APPLICATION_JSON_VALUE)
 public class WalletResource {
 
-    private final WalletServiceImpl walletService;
+    private final WalletService walletService;
     private final WalletMapper walletMapper;
 
 
-    public WalletResource(final WalletServiceImpl walletService, WalletMapper walletMapper) {
+    public WalletResource(WalletService walletService, WalletMapper walletMapper) {
         this.walletService = walletService;
         this.walletMapper = walletMapper;
     }

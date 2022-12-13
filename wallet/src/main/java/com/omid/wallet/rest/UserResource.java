@@ -3,7 +3,7 @@ package com.omid.wallet.rest;
 import com.omid.wallet.dto.UserDTO;
 import com.omid.wallet.entity.UserEntity;
 import com.omid.wallet.mapper.UserMapper;
-import com.omid.wallet.service.UserServiceImpl;
+import com.omid.wallet.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserResource {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final UserMapper userMapper;
 
-    public UserResource(final UserServiceImpl userService, UserMapper userMapper) {
+    public UserResource(final UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
     }
