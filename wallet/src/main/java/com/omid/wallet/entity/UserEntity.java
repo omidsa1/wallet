@@ -52,4 +52,6 @@ public class UserEntity {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
-}
+
+
+    }

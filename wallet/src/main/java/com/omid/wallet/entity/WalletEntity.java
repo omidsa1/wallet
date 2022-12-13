@@ -49,4 +49,9 @@ public class WalletEntity {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+
+    public WalletEntity() {
+        this.active = true;
+    }
 }
+

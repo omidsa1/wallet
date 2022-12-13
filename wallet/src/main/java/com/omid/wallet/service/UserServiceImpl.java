@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +42,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDTO get(final Long id) {
         return userRepository.findById(id)
                 .map(user -> mapToDTO(user, new UserDTO()))
-                .orElseThrow(() -> new NotFoundException());
+                .orElseThrow(NotFoundException::new);
     }
-//
-//    public Long create(final UserDTO userDTO) {
-//        final UserEntity user = new UserEntity();
-//        mapToEntity(userDTO, user);
-//        return userRepository.save(user).getId();
-//    }
 
     public UserEntity save(UserEntity userEntity) {
         try {

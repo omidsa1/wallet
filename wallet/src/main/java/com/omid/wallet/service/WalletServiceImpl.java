@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class WalletServiceImpl {
+public class WalletServiceImpl implements WalletService {
 
     private final WalletRepository walletRepository;
     private final UserRepository userRepository;
@@ -48,6 +48,8 @@ public class WalletServiceImpl {
     public void delete(final Long id) {
         walletRepository.deleteById(id);
     }
+
+
 
 //    private WalletDTO mapToDTO(WalletEntity wallet, WalletDTO walletDTO) {
 //        walletDTO.setId(wallet.getId());

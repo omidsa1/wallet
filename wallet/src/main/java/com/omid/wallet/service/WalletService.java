@@ -1,4 +1,4 @@
 package com.omid.wallet.service;
 
-public class WalletService {
+public interface WalletService {
 }
