@@ -1,7 +1,5 @@
 package com.omid.wallet.service;
 
-import com.omid.wallet.dto.WalletDTO;
-import com.omid.wallet.entity.UserEntity;
 import com.omid.wallet.entity.WalletEntity;
 import com.omid.wallet.repos.UserRepository;
 import com.omid.wallet.repos.WalletRepository;
@@ -9,6 +7,7 @@ import com.omid.wallet.util.NotFoundException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,29 +24,24 @@ public class WalletServiceImpl {
         this.userRepository = userRepository;
     }
 
-    public List<WalletDTO> findAll() {
+    public List<WalletEntity> findAll() {
         final List<WalletEntity> wallets = walletRepository.findAll(Sort.by("id"));
-        return wallets.stream()
-                .map((wallet) -> mapToDTO(wallet, new WalletDTO()))
-                .collect(Collectors.toList());
+        return new ArrayList<>(wallets);
     }
 
-    public WalletDTO get(final Long id) {
+    public WalletEntity get(final Long id) {
         return walletRepository.findById(id)
-                .map(wallet -> mapToDTO(wallet, new WalletDTO()))
                 .orElseThrow(NotFoundException::new);
     }
 
-    public Long create(final WalletDTO walletDTO) {
+    public Long create(WalletEntity walletEntity) {
         final WalletEntity wallet = new WalletEntity();
-        mapToEntity(walletDTO, wallet);
         return walletRepository.save(wallet).getId();
     }
 
-    public void update(final Long id, WalletDTO walletDTO) {
-        final WalletEntity wallet = walletRepository.findById(id)
+    public void update(WalletEntity walletEntity) {
+        final WalletEntity wallet = walletRepository.findById(walletEntity.getId())
                 .orElseThrow(NotFoundException::new);
-        mapToEntity(walletDTO, wallet);
         walletRepository.save(wallet);
     }
 
@@ -55,24 +49,24 @@ public class WalletServiceImpl {
         walletRepository.deleteById(id);
     }
 
-    private WalletDTO mapToDTO(WalletEntity wallet, WalletDTO walletDTO) {
-        walletDTO.setId(wallet.getId());
-        walletDTO.setName(wallet.getName());
-        walletDTO.setBalance(wallet.getBalance());
-        walletDTO.setActive(wallet.getActive());
-        walletDTO.setUser(wallet.getUser() == null ? null : wallet.getUser().getId());
-        return walletDTO;
-    }
+//    private WalletDTO mapToDTO(WalletEntity wallet, WalletDTO walletDTO) {
+//        walletDTO.setId(wallet.getId());
+//        walletDTO.setName(wallet.getName());
+//        walletDTO.setBalance(wallet.getBalance());
+//        walletDTO.setActive(wallet.getActive());
+//        walletDTO.setUser(wallet.getUser() == null ? null : wallet.getUser().getId());
+//        return walletDTO;
+//    }
 
-    private WalletEntity mapToEntity(WalletDTO walletDTO, WalletEntity wallet) {
-        wallet.setName(walletDTO.getName());
-        wallet.setBalance(walletDTO.getBalance());
-        wallet.setActive(walletDTO.getActive());
-        final UserEntity user = walletDTO.getUser() == null ? null : userRepository.findById(walletDTO.getUser())
-                .orElseThrow(() -> new NotFoundException("user not found"));
-        wallet.setUser(user);
-        return wallet;
-    }
+//    private WalletEntity mapToEntity(WalletDTO walletDTO, WalletEntity wallet) {
+//        wallet.setName(walletDTO.getName());
+//        wallet.setBalance(walletDTO.getBalance());
+//        wallet.setActive(walletDTO.getActive());
+//        final UserEntity user = walletDTO.getUser() == null ? null : userRepository.findById(walletDTO.getUser())
+//                .orElseThrow(() -> new NotFoundException("user not found"));
+//        wallet.setUser(user);
+//        return wallet;
+//    }
 
     public boolean nameExists(String name) {
         return walletRepository.existsByNameIgnoreCase(name);

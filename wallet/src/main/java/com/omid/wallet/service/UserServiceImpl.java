@@ -17,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -33,11 +33,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public List<UserDTO> findAll() {
+    public List<UserEntity> findAll() {
         final List<UserEntity> users = userRepository.findAll(Sort.by("id"));
-        return users.stream()
-                .map((user) -> mapToDTO(user, new UserDTO()))
-                .collect(Collectors.toList());
+        return new ArrayList<>(users);
     }
 
     public UserDTO get(final Long id) {
@@ -61,7 +59,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
-    public UserEntity update(UserEntity userEntity) {
+    public void update(UserEntity userEntity) {
 
         if ((userEntity.getId() == null ))
             throw new WalletException("Null user id prohibited!");
@@ -69,7 +67,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserEntity user = findByUsername(username);
         if (user.getId().equals(userEntity.getId())){
-            return  save(userEntity);
+            save(userEntity);
         }
         else throw new WalletException("User was not updated!");
     }
