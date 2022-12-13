@@ -1,6 +1,6 @@
 ### Wallet Project
 This file solely contains instructions on how to run the application.
-For info on the technical decisions, see  [project wiki](/project-wiki.md).
+For info on the technical decisions, see  [project wiki](/project_wiki.md).
 
 This is a maven based Spring Boot project. If you are using a modern IDE chances are that you could build the project directly from the IDE. If you are using command line, you can use the following command to build the project.
 
